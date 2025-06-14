@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Breathing Videos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      margin: 0;
+      background-color: #f9f9f9;
+    }
+
+    h2 {
+      color: teal;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .video-list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .video-container {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .video-iframe {
+      width: 90%;
+      max-width: 600px; /* smaller than 560px for reduced size */
+      height: 236px;     /* aspect ratio 16:9 */
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Breathing Exercise Videos</h2>
+  <div class="video-list" id="breathingVideos">
+    <!-- Iframes will be inserted here -->
+  </div>
+
+  <script>
+    const breathingVideos = [
+      { title: "Exercise 1", url: "https://youtu.be/8TTABLdGCKI?si=Eu4vKazUP0TUOnQX" },
+      { title: "Exercise 2", url: "https://youtu.be/sfSDQRdIvTc?si=Qfqx8UoiJ5qwedLP" },
+      { title: "Exercise 3", url: "https://youtu.be/f1LvJUt9fIg?si=8CHtIVUgLSU4LxBO" },
+      { title: "Exercise 4", url: "https://youtu.be/hJbRpHZr_d0?si=-zT3Di24_I2qgy2v" },
+      { title: "Exercise 5", url: "https://youtu.be/6jK45y1ZsKg?si=jE3sK2MsFeXRP6e2" },
+      { title: "Exercise 6", url: "https://youtu.be/395ZloN4Rr8?si=0oNtAiwFebhCMyQI" }
+    ];
+
+    function convertToEmbedURL(youtubeUrl) {
+      const videoId = youtubeUrl.includes("watch?v=")
+        ? youtubeUrl.split("v=")[1].split("&")[0]
+        : youtubeUrl.split("/").pop().split("?")[0];
+      return `https://www.youtube.com/embed/${videoId}`;
+    }
+
+    function createVideoIframes(videoList, containerId) {
+      const container = document.getElementById(containerId);
+      videoList.forEach(video => {
+        const wrapper = document.createElement("div");
+        wrapper.className = "video-container";
+
+        const iframe = document.createElement("iframe");
+        iframe.src = convertToEmbedURL(video.url);
+        iframe.className = "video-iframe";
+        iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+        iframe.allowFullscreen = true;
+
+        wrapper.appendChild(iframe);
+        container.appendChild(wrapper);
+      });
+    }
+
+    createVideoIframes(breathingVideos, "breathingVideos");
+  </script>
+</body>
+</html>
